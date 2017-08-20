@@ -1,0 +1,4 @@
+dist/**
+/components/**
+aliBridge.js
+selectAddress.js
