@@ -1,3 +1,31 @@
 <html>
-hello world!!
+<div>
+  <video id="webcam"></video>
+  <img src="">
+  <canvas style="display:none;"></canvas>
+</div>
+<script>
+  var video = document.querySelector('video');
+  var canvas = document.querySelector('canvas');
+  var ctx = canvas.getContext('2d');
+  var localMediaStream = null;
+
+  function snapshot() {
+    if (localMediaStream) {
+      ctx.drawImage(video, 0, 0);
+      // “image/webp”对Chrome有效，
+      // 其他浏览器自动降为image/png
+      document.querySelector('img').src = canvas.toDataURL('image/webp');
+    }
+  }
+
+  video.addEventListener('click', snapshot, false);
+
+  navigator.getUserMedia({video: true}, function(stream) {
+    video.src = window.URL.createObjectURL(stream);
+    localMediaStream = stream;
+  }, function(err) {
+    console.log(err);
+  });
+</script>
 </html>
